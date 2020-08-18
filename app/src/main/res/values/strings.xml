@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FS90Controller</string>
+
+    // Button lables
+    <string name="send">send</string>
+    <string name="scan">Scan</string>
+    <string name="cancel">Cancel</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+
+    // angle text
+    <string name="label_angle">Angle(60° - 175°):</string>
+    <string name="hint_angle">60 - 175</string>
+
+    <string name="ble_not_supported">BLE not supported</string>
+</resources>
