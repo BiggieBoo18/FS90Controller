@@ -19,23 +19,28 @@ const int pwmPin = 25;
 
 
 // angle range
-const uint8_t min_angle = 60;
-const uint8_t max_angle = 175;
+const double min_angle = 60;
+const double max_angle = 170;
 
 // PWM properties
 const double frequency = 238.09523809523809523809523809524;
 const int pwmChannel = 0;
-const int resolution = 8;
+const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 238.09523809523809523809523809524)
-const uint8_t max_dutycycle = 129; // when 175 degrees(resolution = 8)
-const uint8_t min_dutycycle = 55;  // when 60 degrees(resolution = 8)
-//const uint8_t max_dutycycle = 257  // when 175 degrees(resolution = 9)
-//const uint8_t min_dutycycle = 110; // when 60 degrees(resolution = 9)
-const double interval = (max_dutycycle - min_dutycycle) / min_angle;
+//const uint8_t max_dutycycle = 129; // when 175 degrees(resolution = 8)
+//const uint8_t min_dutycycle = 55;  // when 60 degrees(resolution = 8)
+//const double max_dutycycle = 255;  // when 175 degrees(resolution = 9)
+//const double min_dutycycle = 110; // when 60 degrees(resolution = 9)
+//const double max_dutycycle = 513;  // when 170 degrees(resolution = 10)
+const double mid_dutycycle = 368; // when 60 degrees(resolution = 10)
+//const double min_dutycycle = 220; // when 60 degrees(resolution = 10)
+const double max_dutycycle = 612;  // when 180 degrees(resolution = 10)
+const double min_dutycycle = 120; // when 50 degrees(resolution = 10)
+const double interval = (max_dutycycle - min_dutycycle) / (max_angle - min_angle);
 
 // dutycycle
-uint32_t dutyCycle = min_dutycycle;
+double dutyCycle = mid_dutycycle;
 
 // BLE variables
 BLEServer *pServer = NULL;
@@ -117,16 +122,23 @@ void parse_command() {
   switch (command.toInt()) {
     default:
       Serial.println("CMD_ANGLE");
-      int angle = command.toInt();
-      Serial.println(angle);
-      if (angle > max_angle) {
-        angle = max_angle;
-      } else if (angle < min_angle) {
-        angle = min_angle;
-      }
-      dutyCycle = min_dutycycle + ((angle - min_angle) * interval);
+//      double angle = command.toDouble();
+//      Serial.println(angle);
+//      if (angle > max_angle) {
+//        angle = max_angle;
+//      } else if (angle < min_angle) {
+//        angle = min_angle;
+//      }
+//      dutyCycle = min_dutycycle + ((angle - min_angle) * interval);
+//      if (dutyCycle > max_dutycycle) {
+//        dutyCycle = max_dutycycle;
+//      }
+      dutyCycle = command.toDouble();
       if (dutyCycle > max_dutycycle) {
         dutyCycle = max_dutycycle;
+      }
+      if (dutyCycle < min_dutycycle) {
+        dutyCycle = min_dutycycle;
       }
       Serial.println(dutyCycle);
   }
