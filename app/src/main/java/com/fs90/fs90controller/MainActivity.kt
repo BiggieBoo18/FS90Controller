@@ -135,7 +135,11 @@ class MainActivity : AppCompatActivity() {
                         isConnected = false
                         (findViewById<TextView>(R.id.textViewDeviceName)).text = ""
                         showSnackbar(rootLayout, "Disconnected...")
-                        bluetoothService?.close()
+                        bluetoothService?.disconnect()
+                        if (bound) {
+                            unbindService(serviceConnection)
+                            bound = false
+                        }
                     }
                 }
 
@@ -160,6 +164,11 @@ class MainActivity : AppCompatActivity() {
                     bluetoothService?.disconnect()
                     (findViewById<TextView>(R.id.textViewDeviceName)).text = ""
                     buttonConnect.text = getString(R.string.connect)
+                    isConnected = false
+                    if (bound) {
+                        unbindService(serviceConnection)
+                        bound = false
+                    }
                 }
             }
         }
@@ -185,6 +194,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        bluetoothService?.disconnect()
         if (bound) {
             unbindService(serviceConnection)
             bound = false
@@ -193,9 +203,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        stopBluetoothService()
+    }
+
+    private fun stopBluetoothService() {
         bluetoothService?.disconnect()
-        bluetoothService?.unbindService(serviceConnection)
+        if (bound) {
+            unbindService(serviceConnection)
+            bound = false
+        }
         bluetoothService?.stopSelf()
+        bluetoothService?.close()
         bluetoothService = null
     }
 
