@@ -1,4 +1,4 @@
-/**
+/*
  * FS90 controller on ESP32DevkitC
  */
 
@@ -12,6 +12,10 @@
 #define SERVICE_UUID           "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 #define CHARACTERISTIC_UUID_RX "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
 #define CHARACTERISTIC_UUID_TX "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+
+// COMMAND
+#define CMD_ANGLE     0
+#define CMD_DUTYCYCLE 1
 
 // pin
 const int pwmPin = 25;
@@ -33,10 +37,10 @@ const int resolution = 10;
 //const double max_dutycycle = 255;  // when 175 degrees(resolution = 9)
 //const double min_dutycycle = 110; // when 60 degrees(resolution = 9)
 //const double max_dutycycle = 513;  // when 170 degrees(resolution = 10)
-const double mid_dutycycle = 368; // when 60 degrees(resolution = 10)
+const double mid_dutycycle = 300; // when 60 degrees(resolution = 10)
 //const double min_dutycycle = 220; // when 60 degrees(resolution = 10)
-const double max_dutycycle = 612;  // when 180 degrees(resolution = 10)
-const double min_dutycycle = 120; // when 50 degrees(resolution = 10)
+const double max_dutycycle = 540;  // when 180 degrees(resolution = 10)
+const double min_dutycycle = 114; // when 50 degrees(resolution = 10)
 const double interval = (max_dutycycle - min_dutycycle) / (max_angle - min_angle);
 
 // dutycycle
@@ -119,21 +123,30 @@ void parse_command() {
   if (command == "") {
     return;
   }
-  switch (command.toInt()) {
-    default:
+  String type  = command.substring(0, 1); // command type
+  String value = command.substring(2);    // command value
+  switch (type.toInt()) {
+    case CMD_ANGLE:
+    {
       Serial.println("CMD_ANGLE");
-//      double angle = command.toDouble();
-//      Serial.println(angle);
-//      if (angle > max_angle) {
-//        angle = max_angle;
-//      } else if (angle < min_angle) {
-//        angle = min_angle;
-//      }
-//      dutyCycle = min_dutycycle + ((angle - min_angle) * interval);
-//      if (dutyCycle > max_dutycycle) {
-//        dutyCycle = max_dutycycle;
-//      }
-      dutyCycle = command.toDouble();
+      double angle = value.toDouble();
+      Serial.println(angle);
+      if (angle > max_angle) {
+        angle = max_angle;
+      } else if (angle < min_angle) {
+        angle = min_angle;
+      }
+      dutyCycle = min_dutycycle + ((angle - min_angle) * interval);
+      if (dutyCycle > max_dutycycle) {
+        dutyCycle = max_dutycycle;
+      }
+      Serial.println(dutyCycle);
+      break;
+    }
+    case CMD_DUTYCYCLE:
+    {
+      Serial.println("CMD_DUTYCYCLE");
+      dutyCycle = value.toDouble();
       if (dutyCycle > max_dutycycle) {
         dutyCycle = max_dutycycle;
       }
@@ -141,6 +154,12 @@ void parse_command() {
         dutyCycle = min_dutycycle;
       }
       Serial.println(dutyCycle);
+      break;
+    }
+    default:
+    {
+      Serial.println("CMD_UNKNOWN");
+    }
   }
 }
 

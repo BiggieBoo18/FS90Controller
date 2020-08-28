@@ -12,5 +12,9 @@
     <string name="label_angle">Angle(60° - 170°):</string>
     <string name="hint_angle">60 – 170</string>
 
+    // dutyCycle text
+    <string name="label_dutyCycle">DutyCycle(120 ~ 612)</string>
+    <string name="hint_dutyCycle">120 ~ 612</string>
+
     <string name="ble_not_supported">BLE not supported</string>
 </resources>

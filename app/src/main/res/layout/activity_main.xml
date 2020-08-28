@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/textViewAngle" />
 
     <Button
-        android:id="@+id/buttonSend"
+        android:id="@+id/buttonSendAngle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -62,5 +62,39 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/label_dutyCycle"
+        app:layout_constraintEnd_toStartOf="@+id/editTextDutyCycle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSendAngle" />
+
+    <EditText
+        android:id="@+id/editTextDutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/hint_dutyCycle"
+        android:ems="10"
+        android:hint="@string/hint_dutyCycle"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/buttonSendDutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/send"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDutyCycle"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDutyCycle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

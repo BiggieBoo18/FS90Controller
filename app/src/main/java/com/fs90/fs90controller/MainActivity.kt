@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private val TAG = this::class.java.simpleName
     private val REQUEST_DEVICE = 1
     private val REQUEST_ENABLE_FINE_LOCATION = 1
+    private val CMD_ANGLE = "0,"
+    private val CMD_DUTYCYCLE = "1,"
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
@@ -40,7 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var rootLayout: ConstraintLayout
-    private lateinit var buttonSend: Button
+    private lateinit var buttonSendAngle: Button
+    private lateinit var buttonSendDutyCycle: Button
     private lateinit var buttonConnect: Button
 
     private var bound = false
@@ -60,11 +63,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun buttonInit() {
         // get buttons
-        buttonSend = findViewById(R.id.buttonSend)
-        buttonSend.setOnClickListener {
-            var angle: String = findViewById<EditText>(R.id.editTextAngle).text.toString()
-            bluetoothService?.writeRXCharacteristic(angle.toByteArray())
+        buttonSendAngle = findViewById(R.id.buttonSendAngle)
+        buttonSendAngle.setOnClickListener {
+            val angle: String = findViewById<EditText>(R.id.editTextAngle).text.toString()
+            bluetoothService?.writeRXCharacteristic((CMD_ANGLE + angle).toByteArray())
             findViewById<EditText>(R.id.editTextAngle).setText("")
+        }
+        buttonSendDutyCycle = findViewById(R.id.buttonSendDutyCycle)
+        buttonSendDutyCycle.setOnClickListener {
+            val dutyCycle: String = findViewById<EditText>(R.id.editTextDutyCycle).text.toString()
+            bluetoothService?.writeRXCharacteristic((CMD_DUTYCYCLE + dutyCycle).toByteArray())
+            findViewById<EditText>(R.id.editTextDutyCycle).setText("")
         }
         buttonConnect = findViewById(R.id.buttonConnect)
         buttonConnect.setOnClickListener {
