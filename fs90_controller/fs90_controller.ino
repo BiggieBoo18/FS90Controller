@@ -23,24 +23,23 @@ const int pwmPin = 25;
 
 
 // angle range
-const double min_angle = 60;
-const double max_angle = 170;
+const double min_angle = 5;
+const double max_angle = 175;
 
 // PWM properties
-const double frequency = 238.09523809523809523809523809524;
+const double frequency = 226.24434389140271493212669683258;
 const int pwmChannel = 0;
 const int resolution = 10;
 
+// max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
+const double max_dutycycle = 495;  // when 175 degrees(resolution = 10)2,130ms
+const double mid_dutycycle = 285; // when 90 degrees(resolution = 10) 1,220ms
+const double min_dutycycle = 110; // when 5 degrees(resolution = 10) 460ms
+
 // max/min Dutycycle(when frequency is 238.09523809523809523809523809524)
-//const uint8_t max_dutycycle = 129; // when 175 degrees(resolution = 8)
-//const uint8_t min_dutycycle = 55;  // when 60 degrees(resolution = 8)
-//const double max_dutycycle = 255;  // when 175 degrees(resolution = 9)
-//const double min_dutycycle = 110; // when 60 degrees(resolution = 9)
-//const double max_dutycycle = 513;  // when 170 degrees(resolution = 10)
-const double mid_dutycycle = 300; // when 60 degrees(resolution = 10)
-//const double min_dutycycle = 220; // when 60 degrees(resolution = 10)
-const double max_dutycycle = 540;  // when 180 degrees(resolution = 10)
-const double min_dutycycle = 114; // when 50 degrees(resolution = 10)
+//const double max_dutycycle = 540;  // when 180 degrees(resolution = 10)2,210ms
+//const double mid_dutycycle = 300; // when 90 degrees(resolution = 10) 1,220ms
+//const double min_dutycycle = 114; // when 5 degrees(resolution = 10) 460ms
 const double interval = (max_dutycycle - min_dutycycle) / (max_angle - min_angle);
 
 // dutycycle
