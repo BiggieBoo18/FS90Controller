@@ -203,11 +203,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        bluetoothService?.disconnect()
-        if (bound) {
-            unbindService(serviceConnection)
-            bound = false
-        }
+//        bluetoothService?.disconnect()
+//        if (bound) {
+//            unbindService(serviceConnection)
+//            bound = false
+//        }
     }
 
     override fun onDestroy() {
