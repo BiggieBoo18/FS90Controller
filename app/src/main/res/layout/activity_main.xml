@@ -97,4 +97,13 @@
         app:layout_constraintEnd_toEndOf="@+id/editTextDutyCycle"
         app:layout_constraintTop_toBottomOf="@+id/editTextDutyCycle" />
 
+    <com.marcinmoskala.arcseekbar.ArcSeekBar
+        android:id="@+id/ArcSeekBar"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSendDutyCycle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
