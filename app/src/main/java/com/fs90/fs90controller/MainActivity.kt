@@ -1,6 +1,7 @@
 package com.fs90.fs90controller
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.*
@@ -20,6 +21,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
+import com.marcinmoskala.arcseekbar.ArcSeekBar
+import com.marcinmoskala.arcseekbar.ProgressListener
 
 class MainActivity : AppCompatActivity() {
     private val TAG = this::class.java.simpleName
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_ENABLE_FINE_LOCATION = 1
     private val CMD_ANGLE = "0,"
     private val CMD_DUTYCYCLE = "1,"
+    private val ARM_LENGTH = 85 // 85mm
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
@@ -45,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonSendAngle: Button
     private lateinit var buttonSendDutyCycle: Button
     private lateinit var buttonConnect: Button
+    private lateinit var arcSeekBar: ArcSeekBar
 
     private var bound = false
     private var isConnected = false
@@ -59,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         serviceStart()
         rootLayout = findViewById(R.id.rootLayout)
         buttonInit()
+        arcSeekBarInit()
     }
 
     private fun buttonInit() {
@@ -86,6 +92,21 @@ class MainActivity : AppCompatActivity() {
                 isConnected = false
             }
         }
+    }
+
+    private fun arcSeekBarInit() {
+        arcSeekBar = findViewById(R.id.arcSeekBar)
+        arcSeekBar.maxProgress = 175
+        arcSeekBar.onProgressChangedListener =
+            ProgressListener { v ->
+                var angle = v.toDouble()
+                if (v < 5) {
+                    angle = 5.0
+                }
+                val x = ARM_LENGTH * kotlin.math.cos(angle)
+                val y = ARM_LENGTH * kotlin.math.sin(angle)
+                findViewById<TextView>(R.id.textViewSeekValue).text = "($x, $y)"
+            }
     }
 
     private fun checkPermission() {
