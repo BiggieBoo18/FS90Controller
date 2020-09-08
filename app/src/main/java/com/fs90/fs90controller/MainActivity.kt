@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
                 val x = ARM_LENGTH * kotlin.math.cos(angle)
                 val y = ARM_LENGTH * kotlin.math.sin(angle)
                 findViewById<TextView>(R.id.textViewSeekValue).text = "($x, $y)"
+                bluetoothService?.writeRXCharacteristic((CMD_ANGLE + angle).toByteArray())
             }
     }
 
