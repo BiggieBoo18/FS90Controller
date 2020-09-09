@@ -165,5 +165,5 @@ void parse_command() {
 void loop(){
   parse_command();
   ledcWrite(pwmChannel, dutyCycle);
-  delay(100);
+  delay(50);
 }
