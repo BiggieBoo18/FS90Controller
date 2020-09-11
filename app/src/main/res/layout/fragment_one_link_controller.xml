@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewAngle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/label_angle"
+        app:layout_constraintEnd_toStartOf="@+id/editTextAngle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextAngle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/hint_angle"
+        android:ems="10"
+        android:hint="@string/hint_angle"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAngle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewAngle"
+        app:layout_constraintTop_toTopOf="@+id/textViewAngle" />
+
+    <Button
+        android:id="@+id/buttonSendAngle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/send"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAngle"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAngle" />
+
+    <TextView
+        android:id="@+id/textViewDutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/label_dutyCycle"
+        app:layout_constraintEnd_toStartOf="@+id/editTextDutyCycle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSendAngle" />
+
+    <EditText
+        android:id="@+id/editTextDutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/hint_dutyCycle"
+        android:ems="10"
+        android:hint="@string/hint_dutyCycle"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDutyCycle"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSendAngle"
+        app:layout_constraintTop_toTopOf="@+id/textViewDutyCycle" />
+
+    <Button
+        android:id="@+id/buttonSendDutyCycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/send"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDutyCycle"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDutyCycle" />
+
+    <TextView
+        android:id="@+id/textViewSeekValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arcSeekBar" />
+
+    <com.marcinmoskala.arcseekbar.ArcSeekBar
+        android:id="@+id/arcSeekBar"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSendDutyCycle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

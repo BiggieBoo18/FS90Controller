@@ -13,7 +13,7 @@
     <string name="hint_angle">5 – 175</string>
 
     // dutyCycle text
-    <string name="label_dutyCycle">DutyCycle(110 ~ 495)</string>
+    <string name="label_dutyCycle">DutyCycle(110 ~ 495):</string>
     <string name="hint_dutyCycle">110 ~ 495</string>
 
     <string name="ble_not_supported">BLE not supported</string>

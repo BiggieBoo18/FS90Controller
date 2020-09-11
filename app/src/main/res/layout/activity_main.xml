@@ -8,39 +8,14 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textViewAngle"
+        android:id="@+id/textViewDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="@string/label_angle"
-        app:layout_constraintEnd_toStartOf="@+id/editTextAngle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonConnect" />
-
-    <EditText
-        android:id="@+id/editTextAngle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints="@string/hint_angle"
-        android:ems="10"
-        android:hint="@string/hint_angle"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewAngle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewAngle"
-        app:layout_constraintTop_toTopOf="@+id/textViewAngle" />
-
-    <Button
-        android:id="@+id/buttonSendAngle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/send"
-        app:layout_constraintEnd_toEndOf="@+id/editTextAngle"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAngle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonConnect"
@@ -53,65 +28,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDeviceName" />
 
-    <TextView
-        android:id="@+id/textViewDeviceName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/label_dutyCycle"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDutyCycle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSendAngle" />
-
-    <EditText
-        android:id="@+id/editTextDutyCycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints="@string/hint_dutyCycle"
-        android:ems="10"
-        android:hint="@string/hint_dutyCycle"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/buttonSendDutyCycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/switchPage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:text="@string/send"
-        app:layout_constraintEnd_toEndOf="@+id/editTextDutyCycle"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDutyCycle" />
-
-    <com.marcinmoskala.arcseekbar.ArcSeekBar
-        android:id="@+id/arcSeekBar"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSendDutyCycle" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonConnect">
 
-    <TextView
-        android:id="@+id/textViewSeekValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arcSeekBar" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
