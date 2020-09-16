@@ -20,17 +20,22 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.marcinmoskala.arcseekbar.ArcSeekBar
 import com.marcinmoskala.arcseekbar.ProgressListener
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val TAG = this::class.java.simpleName
     private val REQUEST_DEVICE = 1
     private val REQUEST_ENABLE_FINE_LOCATION = 1
-    private val CMD_ANGLE = "0,"
-    private val CMD_DUTYCYCLE = "1,"
-    private val ARM_LENGTH = 85 // 85mm
+    val CMD_ANGLE = "0,"
+    val CMD_DUTYCYCLE = "1,"
+    val ARM_LENGTH = 85 // 85mm
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
@@ -46,15 +51,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var rootLayout: ConstraintLayout
-    private lateinit var buttonSendAngle: Button
-    private lateinit var buttonSendDutyCycle: Button
     private lateinit var buttonConnect: Button
-    private lateinit var arcSeekBar: ArcSeekBar
 
     private var bound = false
     private var isConnected = false
-    private var isEngineStarted = false
-    private var bluetoothService: BluetoothService? = null
+    var bluetoothService: BluetoothService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,23 +65,21 @@ class MainActivity : AppCompatActivity() {
         serviceStart()
         rootLayout = findViewById(R.id.rootLayout)
         buttonInit()
-        arcSeekBarInit()
+
+        val tabLayout: TabLayout = findViewById(R.id.tablayout)
+        val viewPager: ViewPager2 = findViewById(R.id.pager)
+        val adapter = PagerAdapter(this)
+        adapter.addFragment(FragmentOneLinkController())
+        adapter.addFragment(FragmentTwoLinkController())
+        viewPager.adapter = adapter
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        TabLayoutMediator(tabLayout, viewPager) {tab, position ->
+            tab.text = adapter.fragments[position]::class.java.simpleName.toLowerCase(Locale.ROOT)
+        }.attach()
     }
 
     private fun buttonInit() {
         // get buttons
-        buttonSendAngle = findViewById(R.id.buttonSendAngle)
-        buttonSendAngle.setOnClickListener {
-            val angle: String = findViewById<EditText>(R.id.editTextAngle).text.toString()
-            bluetoothService?.writeRXCharacteristic((CMD_ANGLE + angle).toByteArray())
-            findViewById<EditText>(R.id.editTextAngle).setText("")
-        }
-        buttonSendDutyCycle = findViewById(R.id.buttonSendDutyCycle)
-        buttonSendDutyCycle.setOnClickListener {
-            val dutyCycle: String = findViewById<EditText>(R.id.editTextDutyCycle).text.toString()
-            bluetoothService?.writeRXCharacteristic((CMD_DUTYCYCLE + dutyCycle).toByteArray())
-            findViewById<EditText>(R.id.editTextDutyCycle).setText("")
-        }
         buttonConnect = findViewById(R.id.buttonConnect)
         buttonConnect.setOnClickListener {
             if (!isConnected) {
@@ -92,22 +91,6 @@ class MainActivity : AppCompatActivity() {
                 isConnected = false
             }
         }
-    }
-
-    private fun arcSeekBarInit() {
-        arcSeekBar = findViewById(R.id.arcSeekBar)
-        arcSeekBar.maxProgress = 175
-        arcSeekBar.onProgressChangedListener =
-            ProgressListener { v ->
-                var angle = v.toDouble()
-                if (v < 5) {
-                    angle = 5.0
-                }
-                val x = ARM_LENGTH * kotlin.math.cos(angle)
-                val y = ARM_LENGTH * kotlin.math.sin(angle)
-                findViewById<TextView>(R.id.textViewSeekValue).text = "($x, $y)"
-                bluetoothService?.writeRXCharacteristic((CMD_ANGLE + angle).toByteArray())
-            }
     }
 
     private fun checkPermission() {
