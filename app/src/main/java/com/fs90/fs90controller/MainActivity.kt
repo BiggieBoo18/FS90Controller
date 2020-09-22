@@ -33,9 +33,10 @@ class MainActivity : AppCompatActivity() {
     private val TAG = this::class.java.simpleName
     private val REQUEST_DEVICE = 1
     private val REQUEST_ENABLE_FINE_LOCATION = 1
-    val CMD_ANGLE = "0,"
-    val CMD_DUTYCYCLE = "1,"
-    val ARM_LENGTH = 85 // 85mm
+    val CMD_ANGLE1 = "0,"
+    val CMD_ANGLE2 = "1,"
+    val CMD_DUTYCYCLE = "2,"
+    val ARM_LENGTH: Float = 85F // 85mm
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {

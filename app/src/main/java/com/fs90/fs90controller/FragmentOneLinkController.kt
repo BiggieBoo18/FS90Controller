@@ -14,6 +14,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class FragmentOneLinkController : Fragment() {
+    private val TAG = this::class.java.simpleName
     private lateinit var mainActivity: MainActivity
     private lateinit var buttonSendAngle: Button
     private lateinit var buttonSendDutyCycle: Button
@@ -36,7 +37,7 @@ class FragmentOneLinkController : Fragment() {
         buttonSendAngle = view.findViewById(R.id.buttonSendAngle)
         buttonSendAngle.setOnClickListener {
             val angle: String = view.findViewById<EditText>(R.id.editTextAngle).text.toString()
-            mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE + angle).toByteArray())
+            mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + angle).toByteArray())
             view.findViewById<EditText>(R.id.editTextAngle).setText("")
         }
         buttonSendDutyCycle = view.findViewById(R.id.buttonSendDutyCycle)
@@ -58,8 +59,8 @@ class FragmentOneLinkController : Fragment() {
                 }
                 val x = mainActivity.ARM_LENGTH * cos(angle)
                 val y = mainActivity.ARM_LENGTH * sin(angle)
-                view.findViewById<TextView>(R.id.textViewSeekValue).text = "($x, $y)"
-                mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE + angle).toByteArray())
+                view.findViewById<TextView>(R.id.textViewSeekValue).text = "Lcos(θ) = $x\n Lsin(θ) = $y"
+                mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + angle).toByteArray())
             }
     }
 }
