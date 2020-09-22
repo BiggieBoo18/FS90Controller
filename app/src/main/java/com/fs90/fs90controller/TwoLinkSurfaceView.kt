@@ -73,7 +73,7 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView) : SurfaceVi
         paint?.let { canvas!!.drawArc(525F-170F*3, 525F-170F*3, 525F+170F*3, 525F+170F*3, 180F, 180F, true, it) }
     }
 
-    private fun drawDot(x: Float, y: Float) {
+    fun drawDot(x: Float, y: Float) {
         /// ロックしてキャンバスを取得
         canvas = surfaceHolder!!.lockCanvas()
         drawBackground()
@@ -84,17 +84,17 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView) : SurfaceVi
         surfaceHolder!!.unlockCanvasAndPost(canvas)
     }
 
-    /// 画面をタッチしたときにアクションごとに関数を呼び出す
-    fun onTouch(event: MotionEvent) : Boolean{
-        when (event.action) {
-//            MotionEvent.ACTION_DOWN -> touchDown(event.x, event.y)
-//            MotionEvent.ACTION_MOVE -> touchMove(event.x, event.y)
-            MotionEvent.ACTION_UP -> touchUp(event.x, event.y)
-        }
-        return true
-    }
-
-    private fun touchUp(x: Float, y: Float) {
-        drawDot(x, y)
-    }
+//    /// 画面をタッチしたときにアクションごとに関数を呼び出す
+//    fun onTouch(event: MotionEvent) : Boolean{
+//        when (event.action) {
+////            MotionEvent.ACTION_DOWN -> touchDown(event.x, event.y)
+////            MotionEvent.ACTION_MOVE -> touchMove(event.x, event.y)
+//            MotionEvent.ACTION_UP -> touchUp(event.x, event.y)
+//        }
+//        return true
+//    }
+//
+//    private fun touchUp(x: Float, y: Float) {
+//        drawDot(x, y)
+//    }
 }

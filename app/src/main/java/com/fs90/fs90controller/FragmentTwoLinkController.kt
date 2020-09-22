@@ -3,10 +3,7 @@ package com.fs90.fs90controller
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.SurfaceView
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import kotlin.math.*
 
@@ -27,9 +24,14 @@ class FragmentTwoLinkController : Fragment() {
         val twoLinkSurfaceView = context?.let { TwoLinkSurfaceView(it, surfaceView) }
         if (twoLinkSurfaceView != null) {
             surfaceView.setOnTouchListener { _, event ->
-                Log.d(TAG, "x=${(event.x - 525F) / 3}, y=${(525F - event.y) / 3}")
-                inverseKinematics((event.x - 525F) / 3, (525F - event.y) / 3)
-                twoLinkSurfaceView.onTouch(event)
+                when(event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        Log.d(TAG, "x=${(event.x - 525F) / 3}, y=${(525F - event.y) / 3}")
+                        inverseKinematics((event.x - 525F) / 3, (525F - event.y) / 3)
+                        twoLinkSurfaceView.drawDot(event.x, event.y)
+                    }
+                }
+                true
             }
         }
         return view
@@ -45,9 +47,8 @@ class FragmentTwoLinkController : Fragment() {
 //        Log.d(TAG, "(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy)) = ${(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy))}")
         val theta2 = atan2(y - mainActivity.ARM_LENGTH * sin(theta1), x - mainActivity.ARM_LENGTH * cos(theta1)) - theta1
         Log.d(TAG, "theta1 = ${theta1}(${Math.toDegrees(theta1)}), theta2 = ${theta2}(${Math.toDegrees(theta2)})")
-//        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + Math.toDegrees(theta1)).toByteArray())
-        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + Math.toDegrees(theta1) + "\r\n" + mainActivity.CMD_ANGLE2 + Math.toDegrees(theta2)).toByteArray())
-//        Thread.sleep(500)
-//        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE2 + Math.toDegrees(theta2)).toByteArray())
+        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + Math.toDegrees(theta1)).toByteArray())
+        Thread.sleep(100)
+        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE2 + Math.toDegrees(theta2)).toByteArray())
     }
 }
