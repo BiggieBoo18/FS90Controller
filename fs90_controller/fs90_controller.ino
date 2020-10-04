@@ -35,19 +35,19 @@ const int pwmChannel2 = 0;
 const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
-const double max_dutycycle = 495;  // when 175 degrees(resolution = 10)2,130us
-const double mid_dutycycle = 285; // when 90 degrees(resolution = 10) 1,220us
-const double min_dutycycle = 110; // when 5 degrees(resolution = 10) 460us
+const double max_dutycycle1 = 495;  // when 175 degrees(resolution = 10)2,130us
+const double mid_dutycycle1 = 285; // when 90 degrees(resolution = 10) 1,220us
+const double min_dutycycle1 = 110; // when 5 degrees(resolution = 10) 460us
+const double interval1 = (max_dutycycle1 - min_dutycycle1) / (max_angle - min_angle);
 
-// max/min Dutycycle(when frequency is 238.09523809523809523809523809524)
-//const double max_dutycycle = 540;  // when 180 degrees(resolution = 10)2,210us
-//const double mid_dutycycle = 300; // when 90 degrees(resolution = 10) 1,220us
-//const double min_dutycycle = 114; // when 5 degrees(resolution = 10) 460us
-const double interval = (max_dutycycle - min_dutycycle) / (max_angle - min_angle);
+const double max_dutycycle2 = 495;  // when 175 degrees(resolution = 10)2,130us
+const double mid_dutycycle2 = 285; // when 90 degrees(resolution = 10) 1,290us
+const double min_dutycycle2 = 110; // when 5 degrees(resolution = 10) 460us
+const double interval2 = (max_dutycycle2 - min_dutycycle2) / (max_angle - min_angle);
 
 // dutycycle
-double dutyCycle1 = mid_dutycycle;
-double dutyCycle2 = mid_dutycycle;
+double dutyCycle1 = mid_dutycycle1;
+double dutyCycle2 = mid_dutycycle2;
 
 // BLE variables
 BLEServer *pServer = NULL;
@@ -142,9 +142,9 @@ void parse_command() {
       } else if (angle < min_angle) {
         angle = min_angle;
       }
-      dutyCycle1 = min_dutycycle + ((angle - min_angle) * interval);
-      if (dutyCycle1 > max_dutycycle) {
-        dutyCycle1 = max_dutycycle;
+      dutyCycle1 = min_dutycycle1 + ((angle - min_angle) * interval1);
+      if (dutyCycle1 > max_dutycycle1) {
+        dutyCycle1 = max_dutycycle1;
       }
       Serial.println(dutyCycle1);
       break;
@@ -159,9 +159,9 @@ void parse_command() {
       } else if (angle < min_angle) {
         angle = min_angle;
       }
-      dutyCycle2 = min_dutycycle + ((angle - min_angle) * interval);
-      if (dutyCycle2 > max_dutycycle) {
-        dutyCycle2 = max_dutycycle;
+      dutyCycle2 = min_dutycycle2 + ((angle - min_angle) * interval2);
+      if (dutyCycle2 > max_dutycycle2) {
+        dutyCycle2 = max_dutycycle2;
       }
       Serial.println(dutyCycle2);
       break;
@@ -170,11 +170,11 @@ void parse_command() {
     {
       Serial.println("CMD_DUTYCYCLE");
       dutyCycle1 = value.toDouble();
-      if (dutyCycle1 > max_dutycycle) {
-        dutyCycle1 = max_dutycycle;
+      if (dutyCycle1 > max_dutycycle1) {
+        dutyCycle1 = max_dutycycle1;
       }
-      if (dutyCycle1 < min_dutycycle) {
-        dutyCycle1 = min_dutycycle;
+      if (dutyCycle1 < min_dutycycle1) {
+        dutyCycle1 = min_dutycycle1;
       }
       Serial.println(dutyCycle1);
       break;
@@ -189,6 +189,6 @@ void parse_command() {
 void loop(){
   parse_command();
   ledcWrite(pwmChannel1, dutyCycle1);
-  ledcWrite(pwmChannel2, dutyCycle2);
-  delay(50);
+//  ledcWrite(pwmChannel2, dutyCycle2);
+//  delay(50);
 }
