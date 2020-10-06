@@ -31,7 +31,7 @@ const double max_angle = 175;
 // PWM properties
 const double frequency = 226.24434389140271493212669683258;
 const int pwmChannel1 = 0;
-const int pwmChannel2 = 0;
+const int pwmChannel2 = 1;
 const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
