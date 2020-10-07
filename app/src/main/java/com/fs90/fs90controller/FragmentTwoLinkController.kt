@@ -26,8 +26,8 @@ class FragmentTwoLinkController : Fragment() {
             surfaceView.setOnTouchListener { _, event ->
                 when(event.action) {
                     MotionEvent.ACTION_UP -> {
-                        Log.d(TAG, "x=${(event.x - 525F) / 3}, y=${(525F - event.y) / 3}")
-                        inverseKinematics((event.x - 525F) / 3, (525F - event.y) / 3)
+                        Log.d(TAG, "x=${(event.x - 525F) / 3}, y=${(540F - event.y) / 3}")
+                        inverseKinematics((event.x - 525F) / 3, (540F - event.y) / 3)
                         twoLinkSurfaceView.drawDot(event.x, event.y)
                     }
                 }

@@ -31,7 +31,7 @@ const double max_angle = 175;
 // PWM properties
 const double frequency = 226.24434389140271493212669683258;
 const int pwmChannel1 = 0;
-const int pwmChannel2 = 0;
+const int pwmChannel2 = 1;
 const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
@@ -40,9 +40,9 @@ const double mid_dutycycle1 = 285; // when 90 degrees(resolution = 10) 1,220us
 const double min_dutycycle1 = 110; // when 5 degrees(resolution = 10) 460us
 const double interval1 = (max_dutycycle1 - min_dutycycle1) / (max_angle - min_angle);
 
-const double max_dutycycle2 = 495;  // when 175 degrees(resolution = 10)2,130us
-const double mid_dutycycle2 = 285; // when 90 degrees(resolution = 10) 1,290us
-const double min_dutycycle2 = 110; // when 5 degrees(resolution = 10) 460us
+const double max_dutycycle2 = 550;  // when 175 degrees(resolution = 10)2,320us
+const double mid_dutycycle2 = 300; // when 90 degrees(resolution = 10) 1,260us
+const double min_dutycycle2 = 115; // when 5 degrees(resolution = 10) 460us
 const double interval2 = (max_dutycycle2 - min_dutycycle2) / (max_angle - min_angle);
 
 // dutycycle
@@ -189,6 +189,6 @@ void parse_command() {
 void loop(){
   parse_command();
   ledcWrite(pwmChannel1, dutyCycle1);
-//  ledcWrite(pwmChannel2, dutyCycle2);
-//  delay(50);
+  ledcWrite(pwmChannel2, dutyCycle2);
+  delay(50);
 }
