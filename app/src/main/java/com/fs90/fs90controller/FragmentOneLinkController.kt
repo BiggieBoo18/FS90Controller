@@ -57,8 +57,8 @@ class FragmentOneLinkController : Fragment() {
                 if (v < 5) {
                     angle = 5.0
                 }
-                val x = mainActivity.ARM_LENGTH * cos(angle)
-                val y = mainActivity.ARM_LENGTH * sin(angle)
+                val x = mainActivity.ARM_LENGTH1 * cos(angle)
+                val y = mainActivity.ARM_LENGTH1 * sin(angle)
                 view.findViewById<TextView>(R.id.textViewSeekValue).text = "Lcos(θ) = $x\n Lsin(θ) = $y"
                 mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + angle).toByteArray())
             }

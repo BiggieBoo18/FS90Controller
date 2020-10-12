@@ -73,12 +73,19 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView) : SurfaceVi
         paint?.let { canvas!!.drawArc(525F-170F*3, 525F-170F*3, 525F+170F*3, 525F+170F*3, 180F, 180F, true, it) }
     }
 
-    fun drawDot(x: Float, y: Float) {
+    fun drawArm(x1: Float, y1: Float, x2: Float, y2: Float) {
         /// ロックしてキャンバスを取得
         canvas = surfaceHolder!!.lockCanvas()
         drawBackground()
-        paint!!.strokeWidth = 30F
-        paint?.let { canvas!!.drawPoint(x, y, it) }
+        paint!!.pathEffect = null;
+        paint!!.color = Color.YELLOW
+        paint?.let {
+            paint!!.strokeWidth = 30F
+            canvas!!.drawPoint(x1, y1, it)
+            canvas!!.drawPoint(x2, y2, it)
+            paint!!.strokeWidth = 10F
+            canvas!!.drawLines(floatArrayOf(525F, 540F - 5F, x1, y1, x1, y1, x2, y2), it)
+        }
 
         /// ロックを解除
         surfaceHolder!!.unlockCanvasAndPost(canvas)

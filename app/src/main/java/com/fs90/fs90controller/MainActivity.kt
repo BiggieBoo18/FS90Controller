@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
     val CMD_ANGLE1 = "0,"
     val CMD_ANGLE2 = "1,"
     val CMD_DUTYCYCLE = "2,"
-    val ARM_LENGTH: Float = 85F // 85mm
+    val ARM_LENGTH1: Float = 85F // 85mm
+    val ARM_LENGTH2: Float = 85F // 85mm
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
