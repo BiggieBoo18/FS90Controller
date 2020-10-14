@@ -5,6 +5,9 @@ It also comes with firmware for the ESP32devkitCv4, which can be written to cont
 # Images
 <img src="https://github.com/BiggieBoo18/FS90Controller/blob/master/images/screen1.png" width="320px"> <img src="https://github.com/BiggieBoo18/FS90Controller/blob/master/images/screen2.png" width="320px">
 
+# Demo
+https://youtu.be/XyIVZsw_kic
+
 # Requirement
 * FS90 servo motors(https://www.pololu.com/product/2818)
 * ESP32devkitCv4
