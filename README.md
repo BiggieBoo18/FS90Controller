@@ -12,6 +12,9 @@ https://youtu.be/XyIVZsw_kic
 * FS90 servo motors(https://www.pololu.com/product/2818)
 * ESP32devkitCv4
 
+# Todo
+* Adaptability to various device sizes. (I've only been able to verify this with the [device](https://jp.sharp/products/shv40/spec.html) I have)
+
 # Author
 BiggieBoo18(Mamoru Deta):  
 :email: jobs4biggieboo@gmail.com  
