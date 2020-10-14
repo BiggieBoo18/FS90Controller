@@ -8,6 +8,11 @@ It also comes with firmware for the ESP32devkitCv4, which can be written to cont
 # Demo
 https://youtu.be/XyIVZsw_kic
 
+# Main directories
+* [**app**]: Android application sources.
+* [**fs90_controller**]: Firmware for ESP32devkitCv4.
+* [**kinematics_simulator**]: A simple kinematics simulator built with jupyter.
+
 # Requirement
 * FS90 servo motors(https://www.pololu.com/product/2818)
 * ESP32devkitCv4
