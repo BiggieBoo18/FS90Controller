@@ -16,13 +16,13 @@
 // COMMAND
 #define CMD_ANGLE1    0
 #define CMD_ANGLE2    1
-#define CMD_DUTYCYCLE 2
+#define CMD_ANGLE3    2
+#define CMD_DUTYCYCLE 3
 
 // pin
 const int pwmPin1 = 25;
 const int pwmPin2 = 17;
-
-
+const int pwmPin3 = 16;
 
 // angle range
 const double min_angle = 5;
@@ -32,6 +32,7 @@ const double max_angle = 175;
 const double frequency = 226.24434389140271493212669683258;
 const int pwmChannel1 = 0;
 const int pwmChannel2 = 1;
+const int pwmChannel3 = 2;
 const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
@@ -45,9 +46,15 @@ const double mid_dutycycle2 = 300; // when 90 degrees(resolution = 10) 1,260us
 const double min_dutycycle2 = 115; // when 5 degrees(resolution = 10) 460us
 const double interval2 = (max_dutycycle2 - min_dutycycle2) / (max_angle - min_angle);
 
+const double max_dutycycle3 = 515;  // when 175 degrees(resolution = 10)2,200us
+const double mid_dutycycle3 = 300; // when 90 degrees(resolution = 10) 1,260us
+const double min_dutycycle3 = 117; // when 5 degrees(resolution = 10) 480us
+const double interval3 = (max_dutycycle3 - min_dutycycle3) / (max_angle - min_angle);
+
 // dutycycle
 double dutyCycle1 = mid_dutycycle1;
 double dutyCycle2 = mid_dutycycle2;
+double dutyCycle3 = mid_dutycycle3;
 
 // BLE variables
 BLEServer *pServer = NULL;
@@ -117,10 +124,12 @@ void setup(){
   // configure PWM functionalitites
   ledcSetup(pwmChannel1, frequency, resolution);
   ledcSetup(pwmChannel2, frequency, resolution);
+  ledcSetup(pwmChannel3, frequency, resolution);
   
   // attach the channel to the GPIO to be controlled
   ledcAttachPin(pwmPin1, pwmChannel1);
   ledcAttachPin(pwmPin2, pwmChannel2);
+  ledcAttachPin(pwmPin3, pwmChannel3);
 }
 
 void parse_command() {
@@ -166,13 +175,30 @@ void parse_command() {
       Serial.println(dutyCycle2);
       break;
     }
+    case CMD_ANGLE3:
+    {
+      Serial.println("CMD_ANGLE3");
+      double angle = value.toDouble();
+      Serial.println(angle);
+      if (angle > max_angle) {
+        angle = max_angle;
+      } else if (angle < min_angle) {
+        angle = min_angle;
+      }
+      dutyCycle3 = min_dutycycle3 + ((angle - min_angle) * interval3);
+      if (dutyCycle3 > max_dutycycle3) {
+        dutyCycle3 = max_dutycycle3;
+      }
+      Serial.println(dutyCycle3);
+      break;
+    }
     case CMD_DUTYCYCLE:
     {
       Serial.println("CMD_DUTYCYCLE");
       dutyCycle1 = value.toDouble();
-      if (dutyCycle1 > max_dutycycle1) {
-        dutyCycle1 = max_dutycycle1;
-      }
+//      if (dutyCycle1 > max_dutycycle1) {
+//        dutyCycle1 = max_dutycycle1;
+//      }
       if (dutyCycle1 < min_dutycycle1) {
         dutyCycle1 = min_dutycycle1;
       }
@@ -190,5 +216,6 @@ void loop(){
   parse_command();
   ledcWrite(pwmChannel1, dutyCycle1);
   ledcWrite(pwmChannel2, dutyCycle2);
+  ledcWrite(pwmChannel3, dutyCycle3);
   delay(50);
 }

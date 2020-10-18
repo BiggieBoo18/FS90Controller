@@ -2,47 +2,41 @@ package com.fs90.fs90controller
 
 import android.content.Context
 import android.graphics.*
-import android.util.Log
-import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.WindowManager
 
 
-class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView) : SurfaceView(context), SurfaceHolder.Callback {
+class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView,
+                         private var armLength1: Float, private var armLength2: Float
+) : SurfaceView(context), SurfaceHolder.Callback {
     private val TAG = this::class.java.simpleName
+    private val WIDTH  = 1050
+    private val HEIGHT = 540
+    private val armLength = armLength1 + armLength2
     private var surfaceHolder: SurfaceHolder? = null
     private var paint: Paint? = null
-    var color: Int? = null
     private var canvas: Canvas? = null
+    var armScale     = 0F
+    var screenScale  = 1F
+    var screenWidth  = WIDTH
+    var screenHeight = HEIGHT
 
     init {
         surfaceHolder = surfaceView.holder
-        // display の情報（高さ 横）を取得
-        val size = Point().also {
-            (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.apply {
-                getSize(
-                    it
-                )
-            }
-        }
-        // 背景を透過させ、一番上に表示
+        // transparent
         surfaceHolder!!.setFormat(PixelFormat.TRANSPARENT)
         surfaceView.setZOrderOnTop(true)
-        // コールバック
+        // callback
         surfaceHolder!!.addCallback(this)
-        // ペイント関連の設定
+        // setting paint
         paint = Paint()
-        color = Color.WHITE
-        paint!!.color = color as Int
+        paint!!.color = Color.WHITE
         paint!!.style = Paint.Style.STROKE
         paint!!.strokeCap = Paint.Cap.ROUND
         paint!!.isAntiAlias = true
     }
 
-    // surfaceViewが作られたとき
     override fun surfaceCreated(holder: SurfaceHolder) {
-        /// canvas初期化
         initializeCanvas()
     }
 
@@ -53,55 +47,68 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView) : SurfaceVi
     }
 
 
-    /// canvasの初期化
+    // initialize canvas
     private fun initializeCanvas() {
         // create canvas
         canvas = Canvas()
-        /// ロックしてキャンバスを取得
+        // lock canvas
         canvas = surfaceHolder!!.lockCanvas()
+        // calculate scale
+        val scaleX: Float = (canvas!!.width.toFloat()  / WIDTH)
+        val scaleY: Float = (canvas!!.height.toFloat() / HEIGHT)
+        screenScale = if (scaleX > scaleY) scaleY else scaleX
+        // draw background
         drawBackground()
-        /// ロックを解除
+        // set screen size
+        screenWidth  = canvas!!.width
+        screenHeight = canvas!!.height
+        // release lock
         surfaceHolder!!.unlockCanvasAndPost(canvas)
     }
 
     private fun drawBackground() {
+        // scale view
+        canvas!!.translate((canvas!!.width - WIDTH) / 2 * screenScale, (canvas!!.height - HEIGHT) / 2 * screenScale) // to center
+        canvas!!.scale(screenScale, screenScale) // scale
+        if (armScale == 0F) {
+            // arm scale
+            armScale = screenWidth / armLength / 2
+        }
         // setting paint
         paint!!.pathEffect = DashPathEffect(floatArrayOf(10f, 20f), 0f)
         paint!!.strokeWidth = 5F
-        // キャンバスの背景
+        paint!!.color = Color.WHITE
+        // background
         canvas!!.drawColor(Color.BLACK)
-        paint?.let { canvas!!.drawArc(525F-170F*3, 525F-170F*3, 525F+170F*3, 525F+170F*3, 180F, 180F, true, it) }
+        paint?.let { canvas!!.drawArc(
+            canvas!!.width / 2 - armLength * armScale,
+            canvas!!.width / 2 - armLength * armScale,
+            canvas!!.width / 2 + armLength * armScale,
+            canvas!!.height - 5F + armLength * armScale,
+            180F,
+            180F,
+            true,
+            it
+        ) }
     }
 
     fun drawArm(x1: Float, y1: Float, x2: Float, y2: Float) {
-        /// ロックしてキャンバスを取得
         canvas = surfaceHolder!!.lockCanvas()
+        val sx1 = x1 * armScale + screenWidth / 2
+        val sy1 = -(y1 * armScale) + screenHeight
+        val sx2 = x2 * armScale + screenWidth / 2
+        val sy2 = -(y2 * armScale) + screenHeight
         drawBackground()
         paint!!.pathEffect = null;
         paint!!.color = Color.YELLOW
         paint?.let {
             paint!!.strokeWidth = 30F
-            canvas!!.drawPoint(x1, y1, it)
-            canvas!!.drawPoint(x2, y2, it)
+            canvas!!.drawPoint(canvas!!.width.toFloat() / 2, canvas!!.height.toFloat() - 5F, it)
+            canvas!!.drawPoint(sx1, sy1, it)
+            canvas!!.drawPoint(sx2, sy2, it)
             paint!!.strokeWidth = 10F
-            canvas!!.drawLines(floatArrayOf(525F, 540F - 5F, x1, y1, x1, y1, x2, y2), it)
+            canvas!!.drawLines(floatArrayOf(canvas!!.width.toFloat() / 2, canvas!!.height.toFloat() - 5F, sx1, sy1, sx1, sy1, sx2, sy2), it)
         }
-
-        /// ロックを解除
         surfaceHolder!!.unlockCanvasAndPost(canvas)
     }
-
-//    /// 画面をタッチしたときにアクションごとに関数を呼び出す
-//    fun onTouch(event: MotionEvent) : Boolean{
-//        when (event.action) {
-////            MotionEvent.ACTION_DOWN -> touchDown(event.x, event.y)
-////            MotionEvent.ACTION_MOVE -> touchMove(event.x, event.y)
-//            MotionEvent.ACTION_UP -> touchUp(event.x, event.y)
-//        }
-//        return true
-//    }
-//
-//    private fun touchUp(x: Float, y: Float) {
-//        drawDot(x, y)
-//    }
 }

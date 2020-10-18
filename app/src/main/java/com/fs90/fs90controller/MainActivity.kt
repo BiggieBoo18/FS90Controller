@@ -1,7 +1,6 @@
 package com.fs90.fs90controller
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.*
@@ -11,22 +10,16 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.marcinmoskala.arcseekbar.ArcSeekBar
-import com.marcinmoskala.arcseekbar.ProgressListener
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_ENABLE_FINE_LOCATION = 1
     val CMD_ANGLE1 = "0,"
     val CMD_ANGLE2 = "1,"
-    val CMD_DUTYCYCLE = "2,"
+    val CMD_ANGLE3 = "2,"
+    val CMD_DUTYCYCLE = "3,"
     val ARM_LENGTH1: Float = 85F // 85mm
     val ARM_LENGTH2: Float = 85F // 85mm
 
@@ -168,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                     runOnUiThread {
                         try {
                             val text = txValue?.toString(charset("UTF-8"))
-                            Log.d(TAG, "Recieved data: ${text}")
+                            Log.d(TAG, "Recieved data: $text")
                         } catch (e: Exception) {
                             Log.e(TAG, e.toString())
                         }

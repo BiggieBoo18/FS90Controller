@@ -21,15 +21,18 @@ class FragmentTwoLinkController : Fragment() {
         mainActivity = activity as MainActivity
 
         val surfaceView: SurfaceView = view.findViewById(R.id.surfaceViewTwoLink)
-        val twoLinkSurfaceView = context?.let { TwoLinkSurfaceView(it, surfaceView) }
+        val twoLinkSurfaceView = context?.let { TwoLinkSurfaceView(it, surfaceView, mainActivity.ARM_LENGTH1, mainActivity.ARM_LENGTH2) }
         if (twoLinkSurfaceView != null) {
             surfaceView.setOnTouchListener { _, event ->
                 when(event.action) {
                     MotionEvent.ACTION_UP -> {
-                        Log.d(TAG, "x=${(event.x - 525F) / 3}, y=${(540F - event.y) / 3}")
-                        val (th1, th2) = inverseKinematics((event.x - 525F) / 3, (540F - event.y) / 3)
+                        Log.d(TAG, "x=${(event.x - twoLinkSurfaceView.screenWidth / 2) / twoLinkSurfaceView.armScale}, y=${(twoLinkSurfaceView.screenHeight - event.y) / twoLinkSurfaceView.armScale}")
+                        val (th1, th2) = inverseKinematics(
+                            (event.x - twoLinkSurfaceView.screenWidth / 2) / twoLinkSurfaceView.armScale * twoLinkSurfaceView.screenScale,
+                            (twoLinkSurfaceView.screenHeight - event.y) / twoLinkSurfaceView.armScale * twoLinkSurfaceView.screenScale
+                        )
                         val (x1, y1, x2, y2) = forwardKinematics(th1, th2)
-                        twoLinkSurfaceView.drawArm(x1 * 3 + 525F, -(y1 * 3) + 540F, x2 * 3 + 525F, -(y2 * 3) + 540F)
+                        twoLinkSurfaceView.drawArm(x1, y1, x2, y2)
                     }
                 }
                 true
@@ -53,7 +56,7 @@ class FragmentTwoLinkController : Fragment() {
         val yy = y.toDouble().pow(2)
         val arm1pow = mainActivity.ARM_LENGTH1.toDouble().pow(2)
         val arm2pow = mainActivity.ARM_LENGTH2.toDouble().pow(2)
-        Log.d(TAG, "xx = ${xx}, yy = ${yy}")
+        Log.d(TAG, "xx = ${xx}, yy = $yy")
         val th1 = acos((xx + yy + arm1pow - arm2pow) / (2 * mainActivity.ARM_LENGTH1 * sqrt(xx + yy))) + atan2(y, x)
         Log.d(TAG, "sqrt(xx + yy) = ${sqrt(xx + yy)}")
 //        Log.d(TAG, "(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy)) = ${(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy))}")
