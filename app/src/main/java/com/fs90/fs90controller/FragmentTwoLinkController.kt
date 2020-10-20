@@ -28,8 +28,8 @@ class FragmentTwoLinkController : Fragment() {
                     MotionEvent.ACTION_UP -> {
                         Log.d(TAG, "x=${(event.x - twoLinkSurfaceView.screenWidth / 2) / twoLinkSurfaceView.armScale}, y=${(twoLinkSurfaceView.screenHeight - event.y) / twoLinkSurfaceView.armScale}")
                         val (th1, th2) = inverseKinematics(
-                            (event.x - twoLinkSurfaceView.screenWidth / 2) / twoLinkSurfaceView.armScale * twoLinkSurfaceView.screenScale,
-                            (twoLinkSurfaceView.screenHeight - event.y) / twoLinkSurfaceView.armScale * twoLinkSurfaceView.screenScale
+                            (event.x - twoLinkSurfaceView.screenWidth / 2) / twoLinkSurfaceView.armScale,
+                            (twoLinkSurfaceView.screenHeight - event.y) / twoLinkSurfaceView.armScale
                         )
                         val (x1, y1, x2, y2) = forwardKinematics(th1, th2)
                         twoLinkSurfaceView.drawArm(x1, y1, x2, y2)

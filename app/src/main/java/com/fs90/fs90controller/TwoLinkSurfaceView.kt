@@ -2,6 +2,7 @@ package com.fs90.fs90controller
 
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 
@@ -16,6 +17,7 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView,
     private var surfaceHolder: SurfaceHolder? = null
     private var paint: Paint? = null
     private var canvas: Canvas? = null
+    private var first: Boolean = true
     var armScale     = 0F
     var screenScale  = 1F
     var screenWidth  = WIDTH
@@ -59,32 +61,45 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView,
         screenScale = if (scaleX > scaleY) scaleY else scaleX
         // draw background
         drawBackground()
-        // set screen size
-        screenWidth  = canvas!!.width
-        screenHeight = canvas!!.height
         // release lock
         surfaceHolder!!.unlockCanvasAndPost(canvas)
     }
 
     private fun drawBackground() {
-        // scale view
-        canvas!!.translate((canvas!!.width - WIDTH) / 2 * screenScale, (canvas!!.height - HEIGHT) / 2 * screenScale) // to center
-        canvas!!.scale(screenScale, screenScale) // scale
-        if (armScale == 0F) {
-            // arm scale
-            armScale = screenWidth / armLength / 2
+        if (first) {
+            // scale view
+            canvas!!.translate(
+                (canvas!!.width - WIDTH) / 2 * screenScale,
+                (canvas!!.height - HEIGHT) / 2 * screenScale
+            ) // to center
+            canvas!!.scale(screenScale, screenScale) // scale
+            // set screen size
+            screenWidth = canvas!!.width
+            screenHeight = canvas!!.height
+            // set arm scale
+            armScale = (screenWidth / armLength) / 2
+            // release lock
+            surfaceHolder!!.unlockCanvasAndPost(canvas)
+            // lock canvas
+            canvas = surfaceHolder!!.lockCanvas()
+            first = false
         }
+
         // setting paint
         paint!!.pathEffect = DashPathEffect(floatArrayOf(10f, 20f), 0f)
         paint!!.strokeWidth = 5F
         paint!!.color = Color.WHITE
         // background
         canvas!!.drawColor(Color.BLACK)
+//        Log.d(TAG, (canvas!!.width / 2 - armLength * armScale).toString())
+//        Log.d(TAG, (canvas!!.width / 2 - armLength * armScale).toString())
+//        Log.d(TAG, (canvas!!.width / 2 + armLength * armScale).toString())
+//        Log.d(TAG, (canvas!!.height * 2F - 5F).toString())
         paint?.let { canvas!!.drawArc(
             canvas!!.width / 2 - armLength * armScale,
             canvas!!.width / 2 - armLength * armScale,
             canvas!!.width / 2 + armLength * armScale,
-            canvas!!.height - 5F + armLength * armScale,
+            canvas!!.height * 2F - 5F,
             180F,
             180F,
             true,
@@ -99,7 +114,7 @@ class TwoLinkSurfaceView(context: Context, surfaceView: SurfaceView,
         val sx2 = x2 * armScale + screenWidth / 2
         val sy2 = -(y2 * armScale) + screenHeight
         drawBackground()
-        paint!!.pathEffect = null;
+        paint!!.pathEffect = null
         paint!!.color = Color.YELLOW
         paint?.let {
             paint!!.strokeWidth = 30F
