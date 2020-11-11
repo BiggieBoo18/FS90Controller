@@ -16,5 +16,10 @@
     <string name="label_dutyCycle">DutyCycle(110 ~ 495):</string>
     <string name="hint_dutyCycle">110 ~ 495</string>
 
+    // 3dof fragment text
+    <string name="x">x:</string>
+    <string name="y">y:</string>
+    <string name="z">z:</string>
+
     <string name="ble_not_supported">BLE not supported</string>
 </resources>

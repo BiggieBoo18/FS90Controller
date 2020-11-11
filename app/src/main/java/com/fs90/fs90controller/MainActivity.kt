@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     val CMD_DUTYCYCLE = "3,"
     val ARM_LENGTH1: Float = 85F // 85mm
     val ARM_LENGTH2: Float = 85F // 85mm
+    val BASE_HEIGHT: Float = 70F // 70mm
 
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = PagerAdapter(this)
         adapter.addFragment(FragmentOneLinkController())
         adapter.addFragment(FragmentTwoLinkController())
+        adapter.addFragment(Fragment3DOFController())
         viewPager.adapter = adapter
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         TabLayoutMediator(tabLayout, viewPager) {tab, position ->

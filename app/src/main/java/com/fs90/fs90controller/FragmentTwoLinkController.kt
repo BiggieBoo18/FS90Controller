@@ -61,10 +61,10 @@ class FragmentTwoLinkController : Fragment() {
         Log.d(TAG, "sqrt(xx + yy) = ${sqrt(xx + yy)}")
 //        Log.d(TAG, "(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy)) = ${(xx + yy + lenArm2 - lenArm2) / (2 * mainActivity.ARM_LENGTH * sqrt(xx + yy))}")
         val th2 = atan2(y - mainActivity.ARM_LENGTH1 * sin(th1), x - mainActivity.ARM_LENGTH1 * cos(th1)) - th1
-        Log.d(TAG, "theta1 = ${th1}(${Math.toDegrees(th1)}), theta2 = ${th2}(${Math.toDegrees(th2) + 90})")
-        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + Math.toDegrees(th1)).toByteArray())
+        Log.d(TAG, "theta1 = ${th1}(${Math.toDegrees(th1)}°), theta2 = ${th2}(${Math.toDegrees(th2) + 90}°)")
+        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE2 + Math.toDegrees(th1)).toByteArray())
         Thread.sleep(100)
-        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE2 + (Math.toDegrees(th2) + 90)).toByteArray())
+        mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE3 + (Math.toDegrees(th2) + 90)).toByteArray())
 
         return listOf(th1, th2)
     }

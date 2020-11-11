@@ -37,7 +37,7 @@ class FragmentOneLinkController : Fragment() {
         buttonSendAngle = view.findViewById(R.id.buttonSendAngle)
         buttonSendAngle.setOnClickListener {
             val angle: String = view.findViewById<EditText>(R.id.editTextAngle).text.toString()
-            mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE1 + angle).toByteArray())
+            mainActivity.bluetoothService?.writeRXCharacteristic((mainActivity.CMD_ANGLE2 + angle).toByteArray())
             view.findViewById<EditText>(R.id.editTextAngle).setText("")
         }
         buttonSendDutyCycle = view.findViewById(R.id.buttonSendDutyCycle)

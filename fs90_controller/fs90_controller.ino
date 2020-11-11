@@ -20,9 +20,9 @@
 #define CMD_DUTYCYCLE 3
 
 // pin
-const int pwmPin1 = 25;
+const int pwmPin1 = 16;
 const int pwmPin2 = 17;
-const int pwmPin3 = 16;
+const int pwmPin3 = 25;
 
 // angle range
 const double min_angle = 5;
@@ -36,19 +36,19 @@ const int pwmChannel3 = 2;
 const int resolution = 10;
 
 // max/min Dutycycle(when frequency is 226.24434389140271493212669683258)
-const double max_dutycycle1 = 495;  // when 175 degrees(resolution = 10)2,130us
-const double mid_dutycycle1 = 285; // when 90 degrees(resolution = 10) 1,220us
-const double min_dutycycle1 = 110; // when 5 degrees(resolution = 10) 460us
+const double max_dutycycle1 = 515;  // when 175 degrees(resolution = 10)2,200us
+const double mid_dutycycle1 = 300; // when 90 degrees(resolution = 10) 1,260us
+const double min_dutycycle1 = 117; // when 5 degrees(resolution = 10) 480us
 const double interval1 = (max_dutycycle1 - min_dutycycle1) / (max_angle - min_angle);
 
-const double max_dutycycle2 = 550;  // when 175 degrees(resolution = 10)2,320us
-const double mid_dutycycle2 = 300; // when 90 degrees(resolution = 10) 1,260us
-const double min_dutycycle2 = 115; // when 5 degrees(resolution = 10) 460us
+const double max_dutycycle2 = 495;  // when 175 degrees(resolution = 10)2,130us
+const double mid_dutycycle2 = 285; // when 90 degrees(resolution = 10) 1,220us
+const double min_dutycycle2 = 110; // when 5 degrees(resolution = 10) 460us
 const double interval2 = (max_dutycycle2 - min_dutycycle2) / (max_angle - min_angle);
 
-const double max_dutycycle3 = 515;  // when 175 degrees(resolution = 10)2,200us
+const double max_dutycycle3 = 550;  // when 175 degrees(resolution = 10)2,320us
 const double mid_dutycycle3 = 300; // when 90 degrees(resolution = 10) 1,260us
-const double min_dutycycle3 = 117; // when 5 degrees(resolution = 10) 480us
+const double min_dutycycle3 = 115; // when 5 degrees(resolution = 10) 460us
 const double interval3 = (max_dutycycle3 - min_dutycycle3) / (max_angle - min_angle);
 
 // dutycycle
@@ -199,9 +199,9 @@ void parse_command() {
 //      if (dutyCycle1 > max_dutycycle1) {
 //        dutyCycle1 = max_dutycycle1;
 //      }
-      if (dutyCycle1 < min_dutycycle1) {
-        dutyCycle1 = min_dutycycle1;
-      }
+//      if (dutyCycle1 < min_dutycycle1) {
+//        dutyCycle1 = min_dutycycle1;
+//      }
       Serial.println(dutyCycle1);
       break;
     }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView3dofX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/x"
+        app:layout_constraintBottom_toBottomOf="@+id/editText3dofX"
+        app:layout_constraintEnd_toStartOf="@+id/editText3dofX"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText3dofX" />
+
+    <EditText
+        android:id="@+id/editText3dofX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:autofillHints="@string/hint_angle"
+        android:ems="10"
+        android:hint="@string/hint_angle"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3dofX"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3dofY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/y"
+        app:layout_constraintBottom_toBottomOf="@+id/editText3dofY"
+        app:layout_constraintEnd_toStartOf="@+id/editText3dofY"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText3dofY" />
+
+    <EditText
+        android:id="@+id/editText3dofY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:autofillHints="@string/hint_angle"
+        android:ems="10"
+        android:hint="@string/hint_angle"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/editText3dofX"
+        app:layout_constraintTop_toBottomOf="@+id/editText3dofX" />
+
+    <TextView
+        android:id="@+id/textView3dofZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/z"
+        app:layout_constraintBottom_toBottomOf="@+id/editText3dofZ"
+        app:layout_constraintEnd_toStartOf="@+id/editText3dofZ"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText3dofZ" />
+
+    <EditText
+        android:id="@+id/editText3dofZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:autofillHints="@string/hint_angle"
+        android:ems="10"
+        android:hint="@string/hint_angle"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/editText3dofY"
+        app:layout_constraintTop_toBottomOf="@+id/editText3dofY" />
+
+    <Button
+        android:id="@+id/button3dofSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/send"
+        app:layout_constraintEnd_toEndOf="@+id/editText3dofZ"
+        app:layout_constraintTop_toBottomOf="@+id/editText3dofZ" />
+</androidx.constraintlayout.widget.ConstraintLayout>
