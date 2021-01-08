@@ -18,7 +18,7 @@ https://youtu.be/XyIVZsw_kic
 * ESP32devkitCv4
 
 # Todo
-* Adaptability to various device sizes. (I've only been able to verify this with the [device](https://jp.sharp/products/shv40/spec.html) I have)
+* [x] Adaptability to various device sizes. (I've only been able to verify this with the [device](https://jp.sharp/products/shv40/spec.html) I have)
 
 # Author
 BiggieBoo18(Mamoru Deta):  
